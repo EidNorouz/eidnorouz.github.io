@@ -20,6 +20,7 @@
                 width: 50px;
                 height: 50px;
                 font-size: 40px;
+                overflow: hidden;
                 color: white;
                 background-color: rgb(30,0,0);
                 border-radius: 50px;
@@ -117,6 +118,7 @@
     <body>
         <div class="keypart" id="keypart">
             <p class="key" onclick='document.getElementsByClassName("WInput").item(currentletter).childNodes.item(0).textContent = " "; if (currentletter+1 < WordLen) document.getElementsByClassName("WInput").item(currentletter+1).childNodes.item(0).textContent = " "; currentletter--; if (currentletter < -1) currentletter = -1;'><</p>
+            <p class="key" onclick='checkanswer(); for (let x = 0; x < WordLen; x++) {document.getElementsByClassName("WInput").item(x).childNodes.item(0).textContent = " ";} currentletter = -1;'>✓</p>
         </div>
         <script>
             function randomize(min,max) {
