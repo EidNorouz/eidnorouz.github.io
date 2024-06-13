@@ -1,0 +1,138 @@
+<html>
+    <head>
+        <script src="5words.js"></script>
+        <style>
+            .WInput, .WInputDEAD {
+                width: 50px;
+                height: 50px;
+                font-size: 25px;
+                background-color: black;
+                color: white;
+                text-align: center;
+                border-radius: 50px;
+                display: inline-flex;
+            }
+            .WInput h3, .WInputDEAD h3 {
+                font-size: 25px;
+                margin: auto;
+            }
+            .key {
+                width: 50px;
+                height: 50px;
+                font-size: 40px;
+                color: white;
+                background-color: rgb(30,0,0);
+                border-radius: 50px;
+                display: inline-block;
+                text-align: center;
+                margin: 5px;
+                box-sizing: border-box;
+            }
+            .keypart {
+                display: inline-block;
+                background-color: gray;
+                position: absolute;
+                padding: 30px;
+                top: 100%;
+                border-radius: 50px;
+                transform: translateY(-110%);
+            }
+        </style>
+        <script>
+            letters = "abcdefghijklmnopqrstuvwxyz".split("")
+            currentletter = -1
+            guesses = 0
+            addEventListener("keydown",(e) => {
+                if (currentletter >= WordLen)
+                    currentletter = WordLen-1
+                if (letters.includes(e.key)) {
+                    if (currentletter < WordLen) {
+                        currentletter++
+                        document.getElementsByClassName("WInput")[currentletter].childNodes.item(0).textContent = e.key
+                    } else { currentletter = WordLen-1; }
+                }
+                if (e.key.toLowerCase() == "enter") {
+                    checkanswer()
+                    for (let x = 0; x < WordLen; x++) {
+                        document.getElementsByClassName("WInput").item(x).childNodes.item(0).textContent = " "
+                    }
+                    currentletter = -1
+                }
+                if (e.key.toLowerCase() == "backspace") {
+                    document.getElementsByClassName("WInput").item(currentletter).childNodes.item(0).textContent = " "
+                    if (currentletter+1 < WordLen) document.getElementsByClassName("WInput").item(currentletter+1).childNodes.item(0).textContent = " "
+                    currentletter--
+                    if (currentletter < -1)
+                        currentletter = -1 
+                }
+            })
+            function getwordleinput() {
+                let a = document.createElement("div")
+                a.className = "WInput"
+                a.setAttribute("maxlength",1)
+                let b = document.createElement("h3")
+                b.textContent = " "
+                a.append(b)
+                return a
+            }
+            function checkanswer() {
+                let c = document.getElementsByClassName("WInput")
+                let guess = "";
+                for (let x = 0; x < c.length; x++) {
+                    guess += c.item(x).childNodes.item(0).textContent
+                }
+                if (Word == guess) {
+                    alert("You Won!" + `\nGuesses: ${guesses}\nWord: ${Word}`)
+                    window.location.reload()
+                }
+                if (words.includes(guess) || usablewords.includes(guess)) {
+                    guesses++;
+                    for (let x = 0; x < WordLen; x++) {
+                        if (guess[x] == Word[x]) {
+                            c.item(x).style.backgroundColor = "green"
+                            document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor = "green" 
+                        }
+                        else if (Word.includes(guess[x])) {
+                            c.item(x).style.backgroundColor = "orange"
+                            if (document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor != "green") document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor = "orange"
+                        }
+                        else {
+                            c.item(x).style.backgroundColor = "black"
+                            document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor = "black" 
+                        }
+                    }
+                    for (let x = c.length-1; x >= 0; x--) {
+                        c.item(x).className = "WInputDEAD"
+                    }
+                    for (let x = 0; x < WordLen; x++) {
+                        document.body.append(getwordleinput())
+                    }
+                    document.body.append(document.createElement("br"))
+                } else {
+                    alert("is that a word? for real? you sure? but I dont accept it!")
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="keypart" id="keypart"></div>
+        <script>
+            function randomize(min,max) {
+                return min + Math.floor(Math.random()*(max-min))
+            }
+            Word = usablewords[randomize(0,usablewords.length)].toLowerCase()
+            WordLen = Word.length
+            for (let x = 0; x < WordLen; x++) {
+                document.body.append(getwordleinput())
+            }
+            document.body.append(document.createElement("br"))
+            console.error("Stop cheating you brat!")
+            letters.forEach((e)=>{
+                let a = document.createElement("p")
+                a.textContent = e
+                a.className = "key"
+                document.getElementById("keypart").append(a)
+            })
+        </script>
+    </body>
+</html>

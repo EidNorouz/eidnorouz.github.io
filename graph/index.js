@@ -32,7 +32,7 @@ function canvasaxis() {
 function getgraphlist() {
     let a = []
     let co = []
-    let c = document.getElementsByClassName("graphinput")
+    let c = document.getElementsByClassName("functionpart")
     for (let x = 0; x < c.length; x++) {
         let k = c.item(x).value
         co.push(c.item(x).getAttribute("graphcolor"))
