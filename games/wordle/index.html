@@ -115,7 +115,9 @@
         </script>
     </head>
     <body>
-        <div class="keypart" id="keypart"></div>
+        <div class="keypart" id="keypart">
+            <p class="key" onclick='document.getElementsByClassName("WInput").item(currentletter).childNodes.item(0).textContent = " "; if (currentletter+1 < WordLen) document.getElementsByClassName("WInput").item(currentletter+1).childNodes.item(0).textContent = " "; currentletter--; if (currentletter < -1) currentletter = -1;'><</p>
+        </div>
         <script>
             function randomize(min,max) {
                 return min + Math.floor(Math.random()*(max-min))
@@ -131,6 +133,7 @@
                 let a = document.createElement("p")
                 a.textContent = e
                 a.className = "key"
+                a.setAttribute("onclick",`if (currentletter < WordLen) { currentletter++; document.getElementsByClassName("WInput")[currentletter].childNodes.item(0).textContent = "${e}"; } else { currentletter = WordLen-1; }`);
                 document.getElementById("keypart").append(a)
             })
         </script>
