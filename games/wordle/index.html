@@ -80,7 +80,7 @@
                 let c = document.getElementsByClassName("WInput")
                 let guess = "";
                 for (let x = 0; x < c.length; x++) {
-                    guess += c.item(x).childNodes.item(0).textContent
+                    guess += c.item(x).childNodes.item(0).textContent.toLowerCase(  )
                 }
                 if (Word == guess) {
                     alert("You Won!" + `\nGuesses: ${guesses}\nWord: ${Word}`)
@@ -95,7 +95,7 @@
                         }
                         else if (Word.includes(guess[x])) {
                             c.item(x).style.backgroundColor = "orange"
-                            if (document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])+5).style.backgroundColor != "green") document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor = "orange"
+                            if (document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])+5).style.backgroundColor != "green") document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])+5).style.backgroundColor = "orange"
                         }
                         else {
                             c.item(x).style.backgroundColor = "black"
