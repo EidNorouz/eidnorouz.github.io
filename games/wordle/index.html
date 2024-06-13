@@ -91,15 +91,15 @@
                     for (let x = 0; x < WordLen; x++) {
                         if (guess[x] == Word[x]) {
                             c.item(x).style.backgroundColor = "green"
-                            document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor = "green" 
+                            document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])+5).style.backgroundColor = "green" 
                         }
                         else if (Word.includes(guess[x])) {
                             c.item(x).style.backgroundColor = "orange"
-                            if (document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor != "green") document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor = "orange"
+                            if (document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])+5).style.backgroundColor != "green") document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor = "orange"
                         }
                         else {
                             c.item(x).style.backgroundColor = "black"
-                            document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])).style.backgroundColor = "black" 
+                            document.getElementById("keypart").childNodes.item(letters.indexOf(guess[x])+5).style.backgroundColor = "black" 
                         }
                     }
                     for (let x = c.length-1; x >= 0; x--) {
