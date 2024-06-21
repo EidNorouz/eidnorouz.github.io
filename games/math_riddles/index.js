@@ -1,4 +1,4 @@
-levelcount = 10
+levelcount = 20
 unlockedlevels = localStorage.getItem("unlockedlevels")
 if (unlockedlevels == null) {
     localStorage.setItem("unlockedlevels",1)
@@ -15,11 +15,22 @@ function getlevelbutton(num,locked) {
 function init() {
     let locked = false
     let a = document.getElementById("levels")
-    for (let i = 1; i <= levelcount; i++) {
-        if (i > unlockedlevels)
-            locked = true
-        a.append(getlevelbutton(i,locked))
+    let c = document.createElement("div")
+    c.className = "levelrows"
+    for (let i = 1; i <= parseInt(levelcount/10)+1; i++) {
+        let b = document.createElement("div")
+        b.className = "levelrow"
+        b.id = `levelrow${i}`
+        for (let j = 10*(i-1)+1; j <= 10*i; j++) {
+            if (j > levelcount)
+                break
+            if (j > unlockedlevels)
+                locked = true
+            b.append(getlevelbutton(j,locked))
+        }
+        c.append(b)
     }
+    a.append(c)
 }
 function preparelevelform() {
     document.getElementById("levelpart").remove()
@@ -57,10 +68,15 @@ function openlevel(num) {
     question.className = "question"
     document.getElementById("questionpart").append(question)
 }
+function min(a,b) {
+    if (a > b)
+        return b
+    return a
+}
 function submitanswer() {
     let submitedanswer = document.getElementById("answer").value
     if (parseInt(submitedanswer) == QUESTIONS_answers[currentlevel-1]) {
-        localStorage.setItem("unlockedlevels",parseInt(localStorage.getItem("unlockedlevels"))+1)
+        localStorage.setItem("unlockedlevels",parseInt(min(parseInt(localStorage.getItem("unlockedlevels")),currentlevel)+1))
         alert("Correct!")
         window.location.reload()
     } else {
