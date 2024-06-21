@@ -116,3 +116,17 @@ body {
     width: 100%;
     transform: translateY(-50%);
 }
+p {
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    transform: translateY(-100%);
+    color: white;
+    font-weight: bolder;
+}
+splitter {
+    color: orange;
+    font-weight: bolder;
+}
