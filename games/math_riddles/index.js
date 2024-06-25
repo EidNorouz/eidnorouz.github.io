@@ -1,4 +1,4 @@
-levelcount = 20
+levelcount = 30
 unlockedlevels = localStorage.getItem("unlockedlevels")
 if (unlockedlevels == null) {
     localStorage.setItem("unlockedlevels",1)
@@ -7,6 +7,8 @@ if (unlockedlevels == null) {
 function getlevelbutton(num,locked) {
     let a = document.createElement("button")
     a.className = "levelbutton"
+    if (num % 10 == 0)
+        a.className += " coollevel"
     a.setAttribute("onclick",`openlevel(${num})`)
     a.textContent = num
     a.disabled = locked
@@ -59,10 +61,16 @@ function preparelevelform() {
     answerpart.append(anscont)
     document.body.append(answerpart)
 }
+function setupbossform() {
+    document.getElementById("questionpart").className += " BossModeQ"
+    document.getElementById("answerpart").className += " BossModeA"
+}
 currentlevel = 0
 function openlevel(num) {
     currentlevel = num
     preparelevelform()
+    if (num % 10 == 0)
+        setupbossform()
     let question = document.createElement("img")
     question.src = `questionbank/${num}.png`
     question.className = "question"
