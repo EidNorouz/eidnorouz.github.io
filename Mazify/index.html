@@ -74,6 +74,41 @@
                     }
                 } return false
             }
+            function findconnected(point) {
+                let freeboo = []
+                if (point[1] < maze_height-1 && paths[point[1]+1][point[0]] == 2) // if that slot is 2 (up) means the path to go to that slot is 4 (down) in the eye of the dot
+                    freeboo.push(4)
+                if (point[1] > 0 && paths[point[1]-1][point[0]] == 4)
+                    freeboo.push(2)
+                if (point[0] < maze_width-1 && paths[point[1]][point[0]+1] == 3)
+                    freeboo.push(1)
+                if (point[0] > 0 && paths[point[1]][point[0]-1] == 1)
+                    freeboo.push(3)
+                return freeboo
+            }
+            function getpoint(point,direction) {
+                switch (direction) {
+                    case 1:
+                        return [point[0]+1,point[1]]
+                    case 2:
+                        return [point[0],point[1]-1]
+                    case 3:
+                        return [point[0]-1,point[1]]
+                    case 4:
+                        return [point[0],point[1]+1]
+                }
+            }
+            function findexit() {
+                let ep = endpos;
+                let sp = startpos; // sorry but I dont care if it slows down anything or its a waste of line, I am too confuzzled ok? I need shortcuts
+                let a = [ep[0],ep[1]]
+                let pathway = [a]
+                while (a[0] != sp[0] || a[1] != sp[1]) {
+                    a = getpoint(a,paths[a[1]][a[0]])
+                    pathway.push(a)
+                }
+                return pathway
+            }
             function generatemaze() {
                 try {
                     can_width = document.getElementById("resx").value
@@ -224,7 +259,14 @@
                     }
                 }
             }
+            function checkpointcontainment(arr,point) {
+                for (let x = 0; x < arr.length; x++)
+                    if (arr[x][0]==point[0] && arr[x][1]==point[1])
+                        return true
+                return false
+            }
             function drawpath() {
+                exitway = findexit()
                 for (let y = 1; y <= maze_height; y++) {
                     for (let x = 1; x <= maze_width; x++) {
                         let grid = [can_width/(maze_width+1),can_height/(maze_height+1)]
@@ -247,11 +289,15 @@
                                 break;
                         }
                         ctx.strokeStyle = "green"
+                        if (checkpointcontainment(exitway,[x-1,y-1]))
+                            ctx.strokeStyle="orange"
                         ctx.stroke()
                         ctx.beginPath()
                         ctx.setLineDash([])
                         ctx.arc(grid[0]*x,grid[1]*y,min(grid[0],grid[1])/6,0,2*Math.PI)
                         ctx.fillStyle="green"
+                        if (checkpointcontainment(exitway,[x-1,y-1]))
+                            ctx.fillStyle="orange"
                         ctx.fill()
                         if (endpos[0] == x-1 && endpos[1] == y-1) {
                             ctx.beginPath()
