@@ -51,6 +51,36 @@ function graphs(graphlist = getgraphlist()[0], graphcolors = getgraphlist()[1]) 
         drawgraph(func,graphlist[y],graphcolors[y])
     }
 }
+function graphsprime() {
+    graphreset()
+    zlim = parseInt(document.getElementById("zlimit").value)
+    formula1 = document.getElementById("singleinp1").value
+    formula2 = document.getElementById("singleinp2").value
+    graph.beginPath()
+    graph.setLineDash([])
+    zacc = 1/parseInt(document.getElementById("zacc").value)
+    graph.strokeStyle = "rgb(0,0,0)"
+    ztime = parseFloat(document.getElementById("animtime").value)
+    if(ztime != 0) {
+        z = zacc
+        func = (formula1,formula2,zacc,zlim,z,ztime) => {setTimeout(()=>{
+            graph.moveTo(graphmargin[1][0]-math.evaluate(formula1.replaceAll("z","(" + ((z-zacc))*zoommultiplier + ")")),graphmargin[1][1]-math.evaluate(formula2.replaceAll("z","(" + ((z-zacc))*zoommultiplier + ")")))
+            graph.lineTo(graphmargin[1][0]-math.evaluate(formula1.replaceAll("z","(" + ((z))*zoommultiplier + ")")),graphmargin[1][1]-math.evaluate(formula2.replaceAll("z","(" + ((z))*zoommultiplier + ")")))
+            graph.stroke()
+            z += zacc;
+            if (z < zlim)
+                func(formula1,formula2,zacc,zlim,z)
+        },ztime)}
+        func(formula1,formula2,zacc,zlim,z,ztime)
+    }
+    else {
+        for (let z = zacc; z <= zlim; z+=zacc) {
+            graph.moveTo(graphmargin[1][0]-math.evaluate(formula1.replaceAll("z","(" + ((z-zacc))*zoommultiplier + ")")),graphmargin[1][1]-math.evaluate(formula2.replaceAll("z","(" + ((z-zacc))*zoommultiplier + ")")))
+            graph.lineTo(graphmargin[1][0]-math.evaluate(formula1.replaceAll("z","(" + ((z))*zoommultiplier + ")")),graphmargin[1][1]-math.evaluate(formula2.replaceAll("z","(" + ((z))*zoommultiplier + ")")))
+        }
+    }
+    graph.stroke()
+}
 function drawgraph(func,formula,color=`rgb(${randomize(0,200)},${randomize(0,200)},${randomize(0,200)})`) {
     graph.beginPath()
     graph.setLineDash([])

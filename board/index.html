@@ -1,0 +1,202 @@
+<html>
+    <head>
+        <style>
+            * {
+                cursor: none;
+            }
+            .cursor {
+                width: 45px;
+                height: 55px;
+                pointer-events: none;
+            }
+            body {
+                padding: 0px;
+                margin: 0px;
+                overflow: hidden;
+            }
+            .options {
+                margin: 0px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                width: 20vw;
+                border: 0px;
+                min-height: 100vh;
+                background-color: rgb(50,50,50);
+            }
+            .canvas {
+                box-sizing: border-box;
+                width: 80vw;
+                margin: 0px;
+                padding: 0px;
+                position: absolute;
+                left:20%;
+                height: 100vh;
+                background-color: rgb(230,230,230);
+            }
+            .markers {
+                margin: 10px;
+                padding: 32px;
+                background-color: rgb(100,100,100);
+                border-radius: 10px;
+            }
+            .marker {
+                width: 75px;
+                height: 75px;
+            }
+            .clean {
+                margin: 10px;
+                padding: 2vw;
+                background-color: rgb(75,75,75);
+                border-radius: 10px;
+            }
+            .cleaner {
+                width: 15vw;
+                height: 14vw;
+            }
+            .hand {
+                width: 102px;
+                height: 79px;
+            }
+        </style>
+        <script>
+            draw = false
+            colors = [
+                "null",
+                "rgb(255,0,0)",
+                "rgb(150,0,150)",
+                "rgb(0,255,0)",
+                "rgb(0,255,255)",
+                "rgb(0,0,255)",
+                "rgb(255,255,0)",
+                "rgb(0,0,0)",
+                "rgb(255,100,255)",
+                "rgb(230,230,230)",
+            ]
+            tools = [
+                "hand.png",
+                "red.png",
+                "purple.png",
+                "green.png",
+                "aqua.png",
+                "blue.png",
+                "yellow.png",
+                "black.png",
+                "pink.png",
+                "eraser.png"
+            ]
+            currentmouse = 0
+            function changemouse() {
+                const cursor = document.getElementById("cursor")
+                if (currentmouse == 999)
+                    cursor.src=tools[tools.length-1]
+                else
+                    cursor.src=tools[currentmouse]
+                if (currentmouse == 999) {
+                    cursor.style.width = "80px"
+                    cursor.style.height = "120px"
+                }
+                else if (currentmouse == 0) {
+                    cursor.style.width = "79px"
+                    cursor.style.height = "102px"
+                }
+                else {
+                    cursor.style.width = "100px"
+                    cursor.style.height = "100px"
+                }
+            }
+            function itemselect(num) {
+                if (currentmouse >= 0) {
+                    document.getElementById("tool" + currentmouse).hidden = false
+                    currentmouse = 0
+                }
+                document.getElementById("tool" + num).hidden = true
+                currentmouse = num
+                changemouse()
+            }
+            oldpos_X = null
+            oldpos_Y = null
+            function getwidth() {return window.visualViewport.width;}    function getheight() {return window.visualViewport.height;}
+        </script>
+    </head>
+    <body>
+        <div class="options">
+            <div class="markers">
+                <img class="marker" id="tool1" onclick="itemselect(1)" src="red.png">
+                <img class="marker" id="tool2" onclick="itemselect(2)" src="purple.png">
+                <img class="marker" id="tool3" onclick="itemselect(3)" src="green.png">
+                <img class="marker" id="tool4" onclick="itemselect(4)" src="aqua.png">
+                <img class="marker" id="tool5" onclick="itemselect(5)" src="blue.png">
+                <img class="marker" id="tool6" onclick="itemselect(6)" src="yellow.png">
+                <img class="marker" id="tool7" onclick="itemselect(7)" src="black.png">
+                <img class="marker" id="tool8" onclick="itemselect(8)" src="pink.png">
+            </div>
+            <div class="clean">
+                <img class="cleaner" id="tool999" onclick="itemselect(999)" src="eraser_1.png">
+            </div>
+            <img class="hand" id="tool0" onclick="itemselect(0)" src="hand.png">
+        </div>
+        <canvas width="1600" height="900" class="canvas" id="canvas" onmousedown="draw=true" onmouseup="draw=false"></canvas>
+        <img class="cursor" id="cursor" style="width: 79px; height:102px" src="hand.png">
+        <script>
+            window.addEventListener('mousemove',(e) => {
+                // cursor location
+
+                const cursorz = document.getElementById("cursor");
+                if (currentmouse == 999) {
+                    New_posX = e.clientX-50
+                    New_posY = e.clientY-50
+                }
+                if (currentmouse < 999) {
+                    New_posX = e.clientX
+                    New_posY = e.clientY-100
+                }
+                if (currentmouse == 0) {
+                    New_posX = e.clientX-51
+                    New_posY = e.clientY-40
+                }
+                cursorz.style.transform = `translate3d(${New_posX}px, ${New_posY}px, 0)`;
+
+            })
+            window.visualViewport.width
+            canvas.addEventListener("mousemove",(e)=>{
+                // drawubg
+                if (draw) {
+                    const canvas = document.getElementById("canvas")
+                    if (canvas.getContext) {
+                        const ctx = canvas.getContext('2d')
+                        if (currentmouse > 0 && currentmouse != 999) {
+                            ctx.beginPath()
+                            ctx.setLineDash([])
+                            ctx.strokeStyle = colors[currentmouse]
+                            ctx.moveTo((e.clientX-getwidth()*0.2)*1600/getwidth()/0.8,(e.clientY)*900/((getheight())))
+                            if (oldpos_X == null || oldpos_Y == null)
+                                ctx.lineTo((e.clientX-getwidth()*0.2)*1600/(window.visualViewport.width-1)/0.8,(e.clientY)*900/((getheight())))
+                            else
+                                ctx.lineTo((oldpos_X-getwidth()*0.2)*1600/getwidth()/0.8,(oldpos_Y)*900/((getheight())))
+                            ctx.lineWidth = 1
+                            ctx.stroke()
+                        }
+                        if (currentmouse == 999) {
+                            ctx.beginPath()
+                            ctx.setLineDash([])
+                            ctx.strokeStyle = colors[currentmouse]
+                            ctx.moveTo((e.clientX-getwidth()*0.2)*1600/getwidth()/0.8,(e.clientY)*900/((getheight())))
+                            if (oldpos_X == null || oldpos_Y == null)
+                                ctx.lineTo((e.clientX-getwidth()*0.2)*1600/(window.visualViewport.width-1)/0.8,(e.clientY)*900/((getheight())))
+                            else
+                                ctx.lineTo((oldpos_X-getwidth()*0.2)*1600/getwidth()/0.8,(oldpos_Y)*900/((getheight())))
+                            ctx.lineWidth = 5
+                            ctx.stroke()
+                        }
+                        oldpos_X = e.clientX
+                        oldpos_Y = e.clientY
+                    }
+                } else {
+                    oldpos_X = null
+                    oldpos_Y = null
+                }
+            });
+        </script>
+    </body>
+</html>
