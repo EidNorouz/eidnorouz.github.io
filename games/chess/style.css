@@ -1,0 +1,163 @@
+body {
+    background-image: url(Backgrounds/bg.jpg);
+    background-size: cover;
+    background-repeat: 1;
+}
+.blurer {
+    left: 0; top: 0; width: 100%; height: 100%; position: absolute;
+    background-color: rgba(0,0,0,0.5);
+}
+.board-container-mediumDSC {
+    background-color: white;
+    width: min(60vw,60vh);
+    height: min(60vw,60vh);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: rgb(50,50,50);
+    transform: translate(-50%,-50%);
+    border: min(1.5vw,1.5vh) solid black;
+    border-radius: min(1vw,1vh);
+    box-shadow: 0px 0px min(2vw,2vh) black;
+    padding: 0px;
+    margin: 0px;
+    display: block;
+}
+.board-container-largeDSC {
+    background-color: white;
+    width: min(80vw,80vh);
+    height: min(80vw,80vh);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: rgb(50,50,50);
+    transform: translate(-50%,-50%);
+    border: min(2vw,2vh) solid black;
+    border-radius: min(1.33vw,1.33vh);
+    box-shadow: 0px 0px min(2.66vw,2.66vh) black;
+    padding: 0px;
+    margin: 0px;
+    display: block;
+}
+.board-row-mediumDSC {
+    width: 100%;
+    height: min(7.5vw,7.5vh);
+    display: flex;
+}
+.board-row-largeDSC {
+    width: 100%;
+    height: min(10vw,10vh);
+    display: flex;
+}
+.chesspiece {
+    box-sizing: border-box;
+    transition: 200ms;
+}
+.settings {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 100%;
+    width: 50px; height: 50px;
+} .settings img {
+    transition: 200ms;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.settings:hover img {
+    filter: invert(1);
+    transition: 200ms;
+}
+.settings:hover {
+    transition: 200ms;
+    border: 3px solid white;
+    background-color: black;
+}
+.WhiteBG{background-color: rgb(210,210,210); border:0;}
+.BlackBG{background-color: darkgreen; border:0;}
+.board-place-mediumDSC {
+    padding: 0px;
+    margin: 0px;
+    width: min(7.5vw,7.5vh);
+    height: min(7.5vw,7.5vh);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.board-place-largeDSC {
+    padding: 0px;
+    margin: 0px;
+    width: min(10vw,10vh);
+    height: min(10vw,10vh);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.boardoverlay-mediumDSC h3 {
+    position: absolute;
+    z-index: 99;
+    font-size: min(1vw,1vh);
+    color: black;
+}
+.boardoverlay-largeDSC h3 {
+    position: absolute;
+    z-index: 99;
+    font-size: min(1.33vw,1.33vh);
+    color: black;
+}
+.first-row-indicator-board-overlay-mediumDSC {top: max(-1vh,-1vw);left: min(0.1vh,0.1vw);}
+.second-row-indicator-board-overlay-mediumDSC {top: min(6.5vh,6.5vw);left: min(0.1vh,0.1vw);}
+.third-row-indicator-board-overlay-mediumDSC {top: min(14vh,14vw);left: min(0.1vh,0.1vw);}
+.fourth-row-indicator-board-overlay-mediumDSC {top: min(21.5vh,21.5vw);left: min(0.1vh,0.1vw);}
+.fifth-row-indicator-board-overlay-mediumDSC {top: min(29vh,29vw);left: min(0.1vh,0.1vw);}
+.sixth-row-indicator-board-overlay-mediumDSC {top: min(36.5vh,36.5vw);left: min(0.1vh,0.1vw);}
+.seventh-row-indicator-board-overlay-mediumDSC {top: min(44vh,44vw);left: min(0.1vh,0.1vw);}
+.eighth-row-indicator-board-overlay-mediumDSC {top: min(51.5vh,51.5vw);left: min(0.1vh,0.1vw);}
+
+.first-column-indicator-board-overlay-mediumDSC {top: min(58vh,58vw);left: min(0.1vh,0.1vw);}
+.second-column-indicator-board-overlay-mediumDSC {top: min(58vh,58vw);left: min(7.6vh,7.6vw);}
+.third-column-indicator-board-overlay-mediumDSC {top: min(58vh,58vw);left: min(15.1vh,15.1vw);}
+.fourth-column-indicator-board-overlay-mediumDSC {top: min(58vh,58vw);left: min(22.6vh,22.6vw);}
+.fifth-column-indicator-board-overlay-mediumDSC {top: min(58vh,58vw);left: min(30.1vh,30.1vw);}
+.sixth-column-indicator-board-overlay-mediumDSC {top: min(58vh,58vw);left: min(37.6vh,37.6vw);}
+.seventh-column-indicator-board-overlay-mediumDSC {top: min(58vh,58vw);left: min(45.1vh,45.1vw);}
+.eighth-column-indicator-board-overlay-mediumDSC {top: min(58vh,58vw);left: min(52.6vh,52.6vw);}
+
+.first-row-indicator-board-overlay-largeDSC {top: max(-1vh,-1vw);left: min(0.1vh,0.1vw);}
+.second-row-indicator-board-overlay-largeDSC {top: min(9vh,9vw);left: min(0.1vh,0.1vw);}
+.third-row-indicator-board-overlay-largeDSC {top: min(19vh,19vw);left: min(0.1vh,0.1vw);}
+.fourth-row-indicator-board-overlay-largeDSC {top: min(29vh,29vw);left: min(0.1vh,0.1vw);}
+.fifth-row-indicator-board-overlay-largeDSC {top: min(39vh,39vw);left: min(0.1vh,0.1vw);}
+.sixth-row-indicator-board-overlay-largeDSC {top: min(49vh,49vw);left: min(0.1vh,0.1vw);}
+.seventh-row-indicator-board-overlay-largeDSC {top: min(59vh,59vw);left: min(0.1vh,0.1vw);}
+.eighth-row-indicator-board-overlay-largeDSC {top: min(69vh,69vw);left: min(0.1vh,0.1vw);}
+
+.first-column-indicator-board-overlay-largeDSC {top: min(77.334vh,77.334vw);left: min(0.1vh,0.1vw);}
+.second-column-indicator-board-overlay-largeDSC {top: min(77.334vh,77.334vw);left: min(10.1vh,10.1vw);}
+.third-column-indicator-board-overlay-largeDSC {top: min(77.334vh,77.334vw);left: min(20.1vh,20.1vw);}
+.fourth-column-indicator-board-overlay-largeDSC {top: min(77.334vh,77.334vw);left: min(30.1vh,30.1vw);}
+.fifth-column-indicator-board-overlay-largeDSC {top: min(77.334vh,77.334vw);left: min(40.1vh,40.1vw);}
+.sixth-column-indicator-board-overlay-largeDSC {top: min(77.334vh,77.334vw);left: min(50.1vh,50.1vw);}
+.seventh-column-indicator-board-overlay-largeDSC {top: min(77.334vh,77.334vw);left: min(60.1vh,60.1vw);}
+.eighth-column-indicator-board-overlay-largeDSC {top: min(77.334vh,77.334vw);left: min(70.1vh,70.1vw);}
+
+.HIGHLIGHTEDSPOT {
+    background-color: gray;
+    width: min(6vw, 6vh);
+    height: min(6vw, 6vh);
+    border-radius: 100%;
+    position: absolute;
+    opacity: 0.5;
+}
+.selectedpiece {
+    transition: 200ms;
+    filter: drop-shadow(0px 0px 10px red) drop-shadow(0px 0px 5px orange) drop-shadow(0px 0px 2px yellow);
+}
+.checkalert {
+    transition: 200ms;
+    border: 10px solid red;
+}
