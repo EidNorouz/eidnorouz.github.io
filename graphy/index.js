@@ -61,9 +61,16 @@ function SUPERPARSE(text,z,zacc=0) {
         text[i] = `(${rndnum})` + kk.join('')
     } return text.join('')
 }
+function timestorepeatmakeupforfloattimeout(t) {
+if (0 < t && t < 1)
+    return 1/t
+else
+    return 1
+}
 function graphsprime() {
     graphreset()
     zlim = parseInt(document.getElementById("zlimit").value)
+    zstart = parseInt(document.getElementById("zstart").value)
     formula1 = document.getElementById("singleinp1").value
     formula2 = document.getElementById("singleinp2").value
     graph.beginPath()
@@ -72,8 +79,9 @@ function graphsprime() {
     graph.strokeStyle = "rgb(0,0,0)"
     ztime = parseFloat(document.getElementById("animtime").value)
     if(ztime != 0) {
-        z = zacc
+        z = zacc+parseInt(zstart)
         func = (formula1,formula2,zacc,zlim,z,ztime) => {setTimeout(()=>{
+            for (let i = 0; i < timestorepeatmakeupforfloattimeout(ztime); i++) {
             if (document.getElementById("PLOTPOINT").checked) {
                 graph.fillStyle = `rgb(100,100,100)`
                 graph.strokeStyle = `rgb(50,50,50)`
@@ -88,18 +96,22 @@ function graphsprime() {
                 graph.beginPath()
                 graph.setLineDash([])
             } else {
-            graph.moveTo(graphmargin[1][0]-math.evaluate(SUPERPARSE(formula1,z,zacc),graphmargin[1][1]-math.evaluate(SUPERPARSE(formula2,z,zacc))))
-            graph.lineTo(graphmargin[1][0]-math.evaluate(SUPERPARSE(formula1,z),graphmargin[1][1]-math.evaluate(SUPERPARSE(formula2,z))))
+            graph.moveTo(graphmargin[1][0]-math.evaluate(SUPERPARSE(formula1,z,zacc)),graphmargin[1][1]-math.evaluate(SUPERPARSE(formula2,z,zacc)))
+            graph.lineTo(graphmargin[1][0]-math.evaluate(SUPERPARSE(formula1,z)),graphmargin[1][1]-math.evaluate(SUPERPARSE(formula2,z)))
         }
-            graph.stroke()
-            z += zacc;
-            if (z < zlim)
-                func(formula1,formula2,zacc,zlim,z)
+                        
+        graph.stroke()
+        z += zacc;
+        if (z >= zlim)
+            break
+    }
+        if (z < zlim)
+            func(formula1,formula2,zacc,zlim,z,ztime)
         },ztime)}
         func(formula1,formula2,zacc,zlim,z,ztime)
     }
     else {
-        for (let z = zacc; z <= zlim; z+=zacc) {
+        for (let z = zacc+parseInt(zstart); z <= zlim; z+=zacc) {
             if (document.getElementById("PLOTPOINT").checked) {
                 graph.fillStyle = `rgb(100,100,100)`
                 graph.strokeStyle = `rgb(50,50,50)`
@@ -114,8 +126,8 @@ function graphsprime() {
                 graph.beginPath()
                 graph.setLineDash([])
             } else {
-            graph.moveTo(graphmargin[1][0]-math.evaluate(SUPERPARSE(formula1,z,zacc),graphmargin[1][1]-math.evaluate(SUPERPARSE(formula2,z,zacc))))
-            graph.lineTo(graphmargin[1][0]-math.evaluate(SUPERPARSE(formula1,z),graphmargin[1][1]-math.evaluate(SUPERPARSE(formula2,z))))
+            graph.moveTo(graphmargin[1][0]-math.evaluate(SUPERPARSE(formula1,z,zacc)),graphmargin[1][1]-math.evaluate(SUPERPARSE(formula2,z,zacc)))
+            graph.lineTo(graphmargin[1][0]-math.evaluate(SUPERPARSE(formula1,z)),graphmargin[1][1]-math.evaluate(SUPERPARSE(formula2,z)))
         }}
     }
     graph.stroke()

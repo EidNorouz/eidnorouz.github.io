@@ -6,10 +6,15 @@
         <title>Graphing Calculator</title>
     </head>
     <body>
-        <div class="graphinputs" id="graphinputs"><div class="graphinput"><input value="x^3" id="function_part" class="functionpart BROIMANIDIOT" graphcolor="blue"><button onclick="if (document.getElementById('graphinputs').childElementCount > 1) event.target.parentNode.remove()">X</button></div></div> 
-        <button class="add" onclick="let a = document.getElementById('graphinputs'); a.append(a.childNodes.item(0).cloneNode()); a.childNodes.item(a.childElementCount-1).innerHTML = a.childNodes.item(0).innerHTML ; a.childNodes.item(a.childElementCount-1).childNodes.item(0).setAttribute('graphcolor',`rgb(${randomize(0,200)},${randomize(0,200)},${randomize(0,200)})`)">+</button>
-        <br>
-        <div class="inpsin"><input value="z^2" class="functionpart" id="singleinp1"><input value="2*z" class="functionpart" id="singleinp2"></div>
+        <div id="settings" class="settings">
+            <button class="settingsbutton" id="settingsbutton" onclick="let k = document.getElementById('settings').childNodes; for (let t = 0; t < k.length; t++) {try{k.item(t).style.opacity = Math.abs(k.item(t).style.opacity-1);}catch(err){continue;}} if(document.getElementById('settings').style.width == 'auto') document.getElementById('settings').style.width = '29px'; else document.getElementById('settings').style.width = 'auto'; document.getElementById('settingsbutton').style.opacity = 1;">X</button>
+            <div class="graphinputs" id="graphinputs"><div class="graphinput"><input value="x^3" id="function_part" class="functionpart BROIMANIDIOT" graphcolor="blue"><button onclick="if (document.getElementById('graphinputs').childElementCount > 1) event.target.parentNode.remove()">X</button></div></div> 
+            <button class="add" onclick="let a = document.getElementById('graphinputs'); a.append(a.childNodes.item(0).cloneNode()); a.childNodes.item(a.childElementCount-1).innerHTML = a.childNodes.item(0).innerHTML ; a.childNodes.item(a.childElementCount-1).childNodes.item(0).setAttribute('graphcolor',`rgb(${randomize(0,200)},${randomize(0,200)},${randomize(0,200)})`)">+</button>
+            <br>
+            <button onclick="graphs()">Draw Function Graphs</button> <br>
+            <div class="inpsin"><input value="z^2" class="functionpart" id="singleinp1"><input value="2*z" class="functionpart" id="singleinp2"></div>
+            <h3 style="display: inline-block;">z-variable start: </h3>
+            <input value="0" min="-10000" max="10000" id="zstart">
         <h3 style="display: inline-block;">z-variable limit: </h3>
         <input value="100" min="0" max="10000" id="zlimit">
         <br>
@@ -21,8 +26,11 @@
         <br>
         <button onclick="graphsprime()">Draw Single Variable Graphs</button>
         <div class="inpang"><input value="t" class="functionpart" id="anginp1"></div>
+        <h3 style="display: inline-block;">angle start: </h3>
+        <input value="0" min="-10000" max="10000" id="astart"> <br>
         <h3 style="display: inline-block;">angle limit: </h3>
         <input value="10" min="0" max="10000" id="alimit">
+        <br>
         <h3 style="display: inline-block;">angle accuracy: </h3>
         <input value="100" min="1" max="10000000" id="aacc" step="10">
         <br>
@@ -31,9 +39,9 @@
         <h3 style="display: inline-block;">Zoom (Y Axis): </h3>
         <input type="range" onchange="let test = event.target.value; if (test>0) zoommultiplier = 1/test; else if (test<0) zoommultiplier = -test; graphs();" min="-40" max="40" value="1" class="zoom">
         <br>
-        <button onclick="graphs()">Draw Function Graphs</button> <br>
         <h3>Plot Points:<input type="checkbox" id="PLOTPOINT"></h3><br>
         <h3>Point Size:<input type="range" id="PLOTSIZE" min="1" max="100" value="4"></h3><br>
+        </div>
         <canvas width="1000" height="1000" id="graphboard"></canvas>
         <p style="position: absolute; top:100%; transform: translateY(-200%);">Credit: Will Jefferson (Creator/Programmer), Math.js Library (Evaluation, Functionifying), Navid Abd (Idea man)</p>
         <script>init(); graphreset();</script>
