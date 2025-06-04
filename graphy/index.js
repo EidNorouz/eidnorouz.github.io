@@ -23,6 +23,8 @@ function canvasaxis() {
     graph.beginPath()
     graph.setLineDash([])
     graph.strokeStyle = "red"
+    graph.fillStyle = document.getElementById("BGCOLOR").value
+    graph.fillRect(0,0,graphmargin[2][0],graphmargin[2][1])
     graph.moveTo(graphmargin[1][0], graphmargin[0][1])
     graph.lineTo(graphmargin[1][0], graphmargin[2][1])
     graph.moveTo(graphmargin[0][1], graphmargin[1][1])
